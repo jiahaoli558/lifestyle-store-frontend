@@ -8,19 +8,6 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-  },
-  css: {
-    postcss: {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
-    },
-  },
-  build: {
-    outDir: 'dist'
   }
 })
-
-
 
