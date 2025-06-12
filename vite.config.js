@@ -31,9 +31,8 @@ export default defineConfig({
     port: 3000,
     host: true
     allowedHosts: [
-      'localhost',
-      '.railway.app',
-      '.up.railway.app'
+       'lifestyle-store-frontend-production.up.railway.app'
+    ]
   }
 })
 
