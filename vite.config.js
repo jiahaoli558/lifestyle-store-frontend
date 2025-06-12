@@ -30,6 +30,8 @@ export default defineConfig({
   preview: {
     port: 8080,
     host: true
+    allowedHosts: [
+      'lifestyle-store-frontend-production.up.railway.app']
   }
 })
 
