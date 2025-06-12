@@ -9,19 +9,18 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  css: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer'),
+      ],
+    },
+  },
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    sourcemap: false
-  },
-  server: {
-    port: 3000,
-    host: true
-  },
-  preview: {
-    port: 3000,
-    host: true
+    outDir: 'dist'
   }
 })
+
 
 
