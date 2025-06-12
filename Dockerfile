@@ -5,10 +5,9 @@ FROM node:20-alpine
 WORKDIR /app
 
 # 复制 package.json 和 package-lock.json
-COPY package*.json ./
+COPY package.json package-lock.json ./
 
 # 安装依赖
-RUN rm -rf node_modules package-lock.json
 RUN npm install
 
 # 复制项目所有文件
