@@ -21,4 +21,4 @@ EXPOSE 5173
 
 # 启动静态文件服务器
 CMD ["npx", "serve", "-s", "build", "-l", "5173"]
-Add Dockerfile for custom build
+
