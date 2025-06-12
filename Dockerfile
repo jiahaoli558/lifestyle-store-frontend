@@ -8,6 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 安装依赖
+RUN rm -rf node_modules package-lock.json
 RUN npm install
 
 # 复制项目所有文件
