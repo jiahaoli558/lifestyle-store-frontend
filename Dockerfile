@@ -16,9 +16,6 @@ COPY . .
 # 构建前端应用
 RUN npm run build
 
-# 暴露端口
-EXPOSE 5173
-
 # 启动静态文件服务器
-CMD ["npx", "serve", "-s", "build", "-l", "5173"]
+CMD ["npm", "start"]
 
