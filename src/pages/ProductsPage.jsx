@@ -7,7 +7,9 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Slider } from '@/components/ui/slider'
 import { Filter, Grid, List } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
-import { mockProducts, categories } from '@/data/mockData'
+import { fetchProducts, fetchCategories } from '@/services/api'
+import { useState, useEffect } from 'react'
+
 
 const ProductsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
