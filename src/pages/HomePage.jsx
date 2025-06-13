@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Star, Truck, Shield, Headphones } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
-import { mockProducts, categories } from '@/data/mockData'
+import { fetchProducts, fetchCategories } from '@/services/api'
+import { useState, useEffect } from 'react'
+
 
 const HomePage = () => {
   const featuredProducts = mockProducts.slice(0, 4)
