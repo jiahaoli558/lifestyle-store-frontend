@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 
 
 const HomePage = () => {
-  const featuredProducts = mockProducts.slice(0, 4)
+  const featuredProducts = Products.slice(0, 4)
 
   return (
     <div className="min-h-screen">
