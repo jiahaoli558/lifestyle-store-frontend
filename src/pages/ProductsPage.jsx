@@ -20,7 +20,18 @@ const ProductsPage = () => {
   const [sortBy, setSortBy] = useState('default')
 
   const categoryParam = searchParams.get('category')
-
+  const [products, setProducts] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  
+  useEffect(() => {
+    const loadData = async () => {
+      const productsData = await fetchProducts();
+      const categoriesData = await fetchCategories();
+      setProducts(productsData);
+      setCategoryList(categoriesData);
+    };
+    loadData();
+  }, []);
   // Filter and sort products
   const filteredProducts = useMemo(() => {
     let filtered = [...Products]
