@@ -7,16 +7,37 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Star, ShoppingCart, Heart, Minus, Plus, ArrowLeft, Truck, Shield, RotateCcw } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
 import { useCart } from '@/contexts/CartContext'
-import { mockProducts } from '@/data/mockData'
+import { fetchProducts, fetchCategories } from '@/services/api'
+
 
 const ProductDetailPage = () => {
   const { id } = useParams()
   const { addToCart } = useCart()
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
-
-  const product = mockProducts.find(p => p.id === parseInt(id))
+  const [products, setProducts] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   
+  useEffect(() => {
+    const loadData = async () => {
+      const productsData = await fetchProducts();
+      const categoriesData = await fetchCategories();
+      setProducts(productsData);
+      setCategoryList(categoriesData);
+    };
+    loadData();
+  }, []);
+
+  const product = products.find(p => p.id === id || p.id.toString() === id);
+
+  // 如果数据加载中
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl">加载中...</p>
+      </div>
+    );
+  }
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -30,7 +51,7 @@ const ProductDetailPage = () => {
     )
   }
 
-  // Mock multiple images for the product
+  //images for the product
   const productImages = [
     product.image,
     product.image,
@@ -38,7 +59,7 @@ const ProductDetailPage = () => {
     product.image
   ]
 
-  const relatedProducts = mockProducts
+  const relatedProducts = Products
     .filter(p => p.category === product.category && p.id !== product.id)
     .slice(0, 4)
 
