@@ -9,7 +9,35 @@ import { useState, useEffect } from 'react'
 
 
 const HomePage = () => {
-  const featuredProducts = Products.slice(0, 4)
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        setProducts(data);
+      } catch (err) {
+        setError('Failed to fetch products.');
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getProducts();
+  }, []); // 空数组表示只在组件挂载时运行一次
+
+  // 从获取到的所有商品中截取前4个作为特色商品
+  const featuredProducts = products.slice(0, 4);
+
+  if (loading) {
+    return <div className="text-center py-10">加载中...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">{error}</div>;
+  }
 
   return (
     <div className="min-h-screen">
