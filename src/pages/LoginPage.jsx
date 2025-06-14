@@ -28,7 +28,7 @@ const LoginPage = () => {
                 console.log('user in localStorage:', localStorage.getItem('user'));
                 // 不要用 alert，直接跳转
                 navigate('/');
-}
+                }
             } else {
                 setError(data.message || '登录失败，请检查用户名和密码。');
             }
