@@ -8,7 +8,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
+console.log('register submit');
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(''); // 清除之前的错误信息
