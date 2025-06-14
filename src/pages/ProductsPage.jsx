@@ -157,7 +157,7 @@ const ProductsPage = () => {
                   <div className="mb-6">
                     <h4 className="font-medium mb-3">商品分类</h4>
                     <div className="space-y-2">
-                      {categories.map((category) => (
+                      {categoryList.map((category) => (   // 这里改为 categoryList
                         <div key={category.id} className="flex items-center space-x-2">
                           <Checkbox
                             id={category.id}
