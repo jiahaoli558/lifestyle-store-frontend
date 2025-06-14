@@ -10,32 +10,35 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 console.log('register submit');
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError(''); // 清除之前的错误信息
+    e.preventDefault();
+    setError('');
+    console.log('register submit'); // 1
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, email, password }),
-            });
+    try {
+        console.log('before fetch'); // 2
+        const response = await fetch(`${API_BASE_URL}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password }),
+        });
+        console.log('after fetch'); // 3
 
-            const data = await response.json();
+        const data = await response.json();
 
-            if (response.ok) {
-                console.log('Registration successful:', data);
-                alert('注册成功！请登录。');
-                navigate('/login'); // 注册成功后跳转到登录页
-            } else {
-                setError(data.message || '注册失败，请稍后再试。');
-            }
-        } catch (err) {
-            console.error('Registration error:', err);
-            setError('网络错误，请稍后再试。');
+        if (response.ok) {
+            console.log('Registration successful:', data);
+            alert('注册成功！请登录。');
+            navigate('/login');
+        } else {
+            setError(data.message || '注册失败，请稍后再试。');
         }
-    };
+    } catch (err) {
+        console.error('Registration error:', err);
+        setError('网络错误，请稍后再试。');
+    }
+};
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
