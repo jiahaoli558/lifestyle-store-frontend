@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -12,6 +12,7 @@ import { fetchProducts, fetchCategories } from '@/services/api'
 
 const ProductDetailPage = () => {
   const { id } = useParams()
+  const [loading, setLoading] = useState(true);
   const { addToCart } = useCart()
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
@@ -24,6 +25,7 @@ const ProductDetailPage = () => {
       const categoriesData = await fetchCategories();
       setProducts(productsData);
       setCategoryList(categoriesData);
+      setLoading(false); 
     };
     loadData();
   }, []);
@@ -59,7 +61,7 @@ const ProductDetailPage = () => {
     product.image
   ]
 
-  const relatedProducts = Products
+  const relatedProducts = products
     .filter(p => p.category === product.category && p.id !== product.id)
     .slice(0, 4)
 
