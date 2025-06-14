@@ -22,12 +22,16 @@ const LoginPage = () => {
             });
 
             const data = await response.json();
-
             if (response.ok) {
-                // 登录成功，这里可以处理用户token或保存用户信息
+                // 保存用户信息到 localStorage
+                if (data.user) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                }
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                }
                 console.log('Login successful:', data);
                 alert('登录成功！');
-                // 假设登录成功后跳转到首页
                 navigate('/');
             } else {
                 setError(data.message || '登录失败，请检查用户名和密码。');
