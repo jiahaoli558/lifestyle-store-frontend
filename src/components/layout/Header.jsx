@@ -10,7 +10,7 @@ const Header = () => {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getTotalItems } = useCart();
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+
 
   const navigation = [
     { name: '首页', href: '/' },
