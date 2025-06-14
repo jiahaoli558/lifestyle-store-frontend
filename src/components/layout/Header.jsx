@@ -45,6 +45,8 @@ const Header = () => {
           {/* Search Bar */}
           <div className="hidden md:flex flex-1 max-w-md mx-8">
             <div className="relative w-full">
+            <Link to="/login">登录</Link>
+            <Link to="/register">注册</Link>
               <Input
                 type="text"
                 placeholder="搜索商品..."
