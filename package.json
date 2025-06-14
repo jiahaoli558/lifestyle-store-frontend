@@ -8,7 +8,7 @@
   "build": "vite build",
   "lint": "eslint .",
   "preview": "vite preview --host 0.0.0.0 --port $PORT --strictPort",
-    "start": "serve dist -s -l $PORT",
+  "start": "serve dist -s -l $PORT",
   "serve": "npx serve dist -s -l $PORT"
 },
   "dependencies": {
