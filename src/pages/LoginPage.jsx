@@ -23,15 +23,10 @@ const LoginPage = () => {
 
             const data = await response.json();
             if (response.ok) {
-                // 保存用户信息到 localStorage，结构要和 Header.jsx 读取一致
                 localStorage.setItem('user', JSON.stringify({ username: data.username }));
-                // 如果有 token 也可以保存
-                if (data.token) {
-                    localStorage.setItem('token', data.token);
-                }
-                console.log('Login successful:', data);
+                console.log('user in localStorage:', localStorage.getItem('user'));
                 alert('登录成功！');
-                navigate('/');
+                // navigate('/');
             } else {
                 setError(data.message || '登录失败，请检查用户名和密码。');
             }
