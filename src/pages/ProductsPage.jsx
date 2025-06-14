@@ -80,7 +80,7 @@ const ProductsPage = () => {
     }
   }
 
-  const currentCategory = categories.find(cat => cat.id === categoryParam)
+  const currentCategory = categoryList.find(cat => cat.id === categoryParam)
 
   return (
     <div className="min-h-screen bg-gray-50">
