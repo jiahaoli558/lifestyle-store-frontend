@@ -23,10 +23,9 @@ const LoginPage = () => {
 
             const data = await response.json();
             if (response.ok) {
-                // 保存用户信息到 localStorage
-                if (data.user) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                }
+                // 保存用户信息到 localStorage，结构要和 Header.jsx 读取一致
+                localStorage.setItem('user', JSON.stringify({ username: data.username }));
+                // 如果有 token 也可以保存
                 if (data.token) {
                     localStorage.setItem('token', data.token);
                 }
