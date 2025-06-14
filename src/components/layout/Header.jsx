@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext'
 
 const Header = () => {
   const { user, logout } = useAuth();
+  console.log('Header component - current user:', user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getTotalItems } = useCart();
 
