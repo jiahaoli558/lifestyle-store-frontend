@@ -4,10 +4,12 @@ import { ShoppingCart, Search, Menu, X, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCart } from '@/contexts/CartContext'
+import { useAuth } from '@/contexts/AuthContext' 
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { getTotalItems } = useCart()
+  const { user, logout } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { getTotalItems } = useCart();
   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
   const navigation = [
@@ -20,8 +22,9 @@ const Header = () => {
   ]
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
+    logout(); 
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     window.location.reload()
   }
 
