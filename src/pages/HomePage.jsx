@@ -12,7 +12,7 @@ const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const getProducts = async () => {
       try {

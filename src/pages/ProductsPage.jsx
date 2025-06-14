@@ -34,7 +34,7 @@ const ProductsPage = () => {
   }, []);
   // Filter and sort products
   const filteredProducts = useMemo(() => {
-    let filtered = [...Products]
+    let filtered = [...products]
 
     // Filter by category from URL param
     if (categoryParam) {
