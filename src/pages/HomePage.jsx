@@ -25,6 +25,16 @@ const HomePage = () => {
         setLoading(false);
       }
     };
+    const getCategories = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (err) {
+        setError('Failed to fetch categories.');
+        console.error('Error fetching categories:', err);
+      }
+    };
+    getCategories();
     getProducts();
   }, []); // 空数组表示只在组件挂载时运行一次
 
