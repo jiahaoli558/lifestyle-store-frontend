@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
-import { useAuth } from '../contexts/AuthContext'; // 新增：导入 useAuth
+import { useAuth } from '../contexts/AuthContext'; // 确保路径正确
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // 新增：获取 login 函数
+  const { login } = useAuth(); // 获取 login 函数
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,16 +26,10 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Login successful:', data);
+        console.log('Login successful:', data); // 保留这条日志，确认登录成功
         alert('登录成功！');
-        // 调用 AuthContext 提供的 login 函数，更新全局用户状态并保存到 localStorage
-        login({ username: data.username }); // 使用 AuthContext 的 login 函数
-        
-        // 打印调试 (可选，确认 AuthContext 已经处理了 localStorage)
-        console.log('user in localStorage (after AuthContext login):', localStorage.getItem('user'));
-        
-        // 跳转首页
-        navigate('/'); // 确保这一行没有被注释掉
+        login({ username: data.username }); // 调用 AuthContext 的 login 函数
+        navigate('/'); // 登录成功后跳转到首页
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
       }
@@ -95,4 +89,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
