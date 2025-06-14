@@ -8,6 +8,7 @@ import { useCart } from '@/contexts/CartContext'
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { getTotalItems } = useCart()
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
   const navigation = [
     { name: '首页', href: '/' },
@@ -17,6 +18,12 @@ const Header = () => {
     { name: '个人护理', href: '/products?category=personal-care' },
     { name: '关于我们', href: '/about' }
   ]
+
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    window.location.reload()
+  }
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -42,17 +49,28 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
+          {/* Search Bar & 登录/注册/欢迎/退出 */}
+          <div className="hidden md:flex flex-1 max-w-md mx-8 items-center">
             <div className="relative w-full">
-            <Link to="/login">登录</Link>
-            <Link to="/register">注册</Link>
               <Input
                 type="text"
                 placeholder="搜索商品..."
                 className="pl-10 pr-4"
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            </div>
+            <div className="ml-4 flex items-center space-x-2">
+              {user ? (
+                <>
+                  <span className="text-green-600">欢迎，{user.username}</span>
+                  <Button onClick={handleLogout} variant="outline" size="sm">退出登录</Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="mr-2">登录</Link>
+                  <Link to="/register">注册</Link>
+                </>
+              )}
             </div>
           </div>
 
@@ -100,7 +118,6 @@ const Header = () => {
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               </div>
-              
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -111,12 +128,24 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              
               <div className="border-t pt-3">
-                <Button variant="ghost" className="w-full justify-start">
-                  <User className="h-5 w-5 mr-2" />
-                  我的账户
-                </Button>
+                {user ? (
+                  <div className="flex flex-col space-y-2">
+                    <span className="text-green-600 px-3">欢迎，{user.username}</span>
+                    <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+                      退出登录
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col space-y-2">
+                    <Link to="/login" className="block px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                      登录
+                    </Link>
+                    <Link to="/register" className="block px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                      注册
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
