@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react' // 合并后的导入
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -8,7 +8,7 @@ import { Slider } from '@/components/ui/slider'
 import { Filter, Grid, List } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
 import { fetchProducts, fetchCategories } from '@/services/api'
-import { useState, useEffect } from 'react'
+// 删除了原来的重复导入行
 
 
 const ProductsPage = () => {
