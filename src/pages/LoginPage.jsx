@@ -24,9 +24,11 @@ const LoginPage = () => {
             const data = await response.json();
             if (response.ok) {
                 localStorage.setItem('user', JSON.stringify({ username: data.username }));
+                // 立即读取并打印，确认写入
                 console.log('user in localStorage:', localStorage.getItem('user'));
-                alert('登录成功！');
-                // navigate('/');
+                // 不要用 alert，直接跳转
+                navigate('/');
+}
             } else {
                 setError(data.message || '登录失败，请检查用户名和密码。');
             }
