@@ -29,7 +29,9 @@ const LoginPage = () => {
         // 打印调试
         console.log('user in localStorage:', localStorage.getItem('user'));
         // 跳转首页
+         setTimeout(() => {
         navigate('/');
+      }, 500); 
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
       }
