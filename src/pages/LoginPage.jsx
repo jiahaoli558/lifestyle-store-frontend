@@ -27,7 +27,9 @@ const LoginPage = () => {
       if (response.ok) {
         localStorage.setItem('user', JSON.stringify({ username: data.username }));
         window.dispatchEvent(new CustomEvent('loginStateChange'));
-        navigate('/');
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 300);
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
       }
@@ -86,3 +88,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
