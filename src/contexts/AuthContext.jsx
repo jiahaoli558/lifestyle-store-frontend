@@ -11,19 +11,29 @@ export const AuthProvider = ({ children }) => {
   // Effect to load user from localStorage on initial mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
+    // Added log:
+    console.log('[AuthContext] Initial mount: trying to load user. Raw storedUser is:', storedUser); 
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error('Failed to parse stored user:', error);
-        localStorage.removeItem('user'); // Clear corrupted data
+        console.error('[AuthContext] Failed to parse stored user on mount:', error);
+        localStorage.removeItem('user');
       }
     }
   }, []);
 
   // Login function
   const login = (userData) => {
+    // Added log:
+    console.log('[AuthContext] Attempting to set localStorage for user:', userData); 
     localStorage.setItem('user', JSON.stringify(userData));
+    // Added log:
+    console.log('[AuthContext] Called localStorage.setItem.'); 
+    // Added logs:
+    const itemSet = localStorage.getItem('user');
+    console.log('[AuthContext] Value of "user" in localStorage immediately after setItem:', itemSet);
+
     setUser(userData);
     setUpdateCount(prevCount => prevCount + 1); // Increment counter
   };
@@ -48,4 +58,5 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
+
 
