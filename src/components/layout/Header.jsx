@@ -1,14 +1,34 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { ShoppingCart, Search, Menu, X, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCart } from '@/contexts/CartContext'
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { getTotalItems } = useCart();
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState(() => {
+    const userData = localStorage.getItem('user')
+    return userData ? JSON.parse(userData) : null
+  })
+  const { getTotalItems } = useCart()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // 登录/注册后页面跳转时，重新读取 user
+    const handleStorage = () => {
+      const userData = localStorage.getItem('user')
+      setUser(userData ? JSON.parse(userData) : null)
+    }
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [])
+
+  // 登录/注册后跳转时也刷新 user
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    setUser(userData ? JSON.parse(userData) : null)
+  }, [window.location.pathname])
 
   const navigation = [
     { name: '首页', href: '/' },
@@ -20,9 +40,10 @@ const Header = () => {
   ]
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    window.location.reload()
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    setUser(null)
+    navigate('/login')
   }
 
   return (
