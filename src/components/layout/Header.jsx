@@ -30,6 +30,15 @@ const Header = () => {
     const userData = localStorage.getItem('user')
     setUser(userData ? JSON.parse(userData) : null)
   }, [location]) // 只需改这里
+
+  useEffect(() => {
+    const handleLoginStateChange = () => {
+      const userData = localStorage.getItem('user');
+      setUser(userData ? JSON.parse(userData) : null);
+    };
+    window.addEventListener('loginStateChange', handleLoginStateChange);
+    return () => window.removeEventListener('loginStateChange', handleLoginStateChange);
+  }, []);
   
   const navigation = [
     { name: '首页', href: '/' },
@@ -179,3 +188,4 @@ const Header = () => {
 
 export default Header
  
+
