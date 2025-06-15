@@ -25,6 +25,8 @@ export const AuthProvider = ({ children }) => {
 
   // Login function
   const login = (userData) => {
+    console.error('!!!!!!!!!! [AuthContext] LOGIN FUNCTION CALLED !!!!!!!!!!!', userData); // New prominent log
+    
     // Added log:
     console.log('[AuthContext] Attempting to set localStorage for user:', userData); 
     localStorage.setItem('user', JSON.stringify(userData));
@@ -58,5 +60,3 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-
-

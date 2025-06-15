@@ -27,6 +27,7 @@ const LoginPage = () => {
       console.log('login response data:', data); // 加这一行
 
       if (response.ok) {
+        console.log('[LoginPage] About to call context login with:', { username: data.username }); // New log
         login({ username: data.username });
         navigate('/', { replace: true });
       } else {
@@ -87,6 +88,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
 
 
