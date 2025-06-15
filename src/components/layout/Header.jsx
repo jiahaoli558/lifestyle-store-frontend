@@ -8,7 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { user, logout } = useAuth();
+  const { user, logout, updateCount } = useAuth();
   const { getTotalItems } = useCart()
   const navigate = useNavigate()
   
@@ -61,6 +61,7 @@ const Header = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             </div>
             <div className="ml-4 flex items-center space-x-2">
+              <span className="text-sm text-gray-500">Count: {updateCount}</span> {/* Temporary display */}
               {user ? (
                 <>
                   <span className="text-green-600">欢迎，{user.username}</span>
@@ -157,6 +158,8 @@ const Header = () => {
 }
 
 export default Header
+ 
+
  
 
  
