@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom' // 加入 useLocation
 import { ShoppingCart, Search, Menu, X, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,6 +13,7 @@ const Header = () => {
   })
   const { getTotalItems } = useCart()
   const navigate = useNavigate()
+  const location = useLocation() // 新增
 
   useEffect(() => {
     // 登录/注册后页面跳转时，重新读取 user
@@ -24,12 +25,12 @@ const Header = () => {
     return () => window.removeEventListener('storage', handleStorage)
   }, [])
 
-  // 登录/注册后跳转时也刷新 user
+  // 关键：用 location 作为依赖
   useEffect(() => {
     const userData = localStorage.getItem('user')
     setUser(userData ? JSON.parse(userData) : null)
-  }, [window.location.pathname])
-
+  }, [location]) // 只需改这里
+  
   const navigation = [
     { name: '首页', href: '/' },
     { name: '全部商品', href: '/products' },
