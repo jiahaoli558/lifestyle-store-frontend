@@ -22,6 +22,7 @@ const LoginPage = () => {
       });
 
       const data = await response.json();
+      console.log('login response data:', data); // 加这一行
 
       if (response.ok) {
         localStorage.setItem('user', JSON.stringify({ username: data.username }));
