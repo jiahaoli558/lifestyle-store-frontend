@@ -17,7 +17,7 @@ const HomePage = () => {
     const getProducts = async () => {
       try {
         const data = await fetchProducts();
-        setProducts(data);
+        setProducts(data.products || []);
       } catch (err) {
         setError('Failed to fetch products.');
         console.error('Error fetching products:', err);

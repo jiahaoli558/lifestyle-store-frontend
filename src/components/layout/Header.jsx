@@ -6,9 +6,9 @@ import { Input } from '@/components/ui/input'
 import { useCart } from '@/contexts/CartContext'
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { getTotalItems } = useCart()
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { getTotalItems } = useCart();
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
   const navigation = [
     { name: '首页', href: '/' },
@@ -20,8 +20,8 @@ const Header = () => {
   ]
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     window.location.reload()
   }
 

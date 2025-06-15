@@ -24,14 +24,9 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // 保存用户信息到 localStorage
         localStorage.setItem('user', JSON.stringify({ username: data.username }));
-        // 打印调试
         console.log('user in localStorage:', localStorage.getItem('user'));
-        // 跳转首页
-      //    setTimeout(() => {
-      //   navigate('/');
-      // }, 500); 
+        navigate('/'); // 关键：登录成功后跳转首页
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
       }
@@ -40,7 +35,6 @@ const LoginPage = () => {
       setError('网络错误，请稍后再试。');
     }
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
