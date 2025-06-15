@@ -26,8 +26,9 @@ const LoginPage = () => {
 
       if (response.ok) {
         localStorage.setItem('user', JSON.stringify({ username: data.username }));
-        console.log('user in localStorage:', localStorage.getItem('user'));
-        window.location.reload(); // 强制刷新页面
+        setTimeout(() => {
+          window.location.reload();
+        }, 100); // 延迟100毫秒再刷新页面
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
       }
