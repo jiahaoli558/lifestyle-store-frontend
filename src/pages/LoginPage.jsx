@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config/api'; // 确保路径正确
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,11 +27,8 @@ const LoginPage = () => {
       console.log('login response data:', data); // 加这一行
 
       if (response.ok) {
-        localStorage.setItem('user', JSON.stringify({ username: data.username }));
-        window.dispatchEvent(new CustomEvent('loginStateChange'));
-        setTimeout(() => {
-          navigate('/', { replace: true });
-        }, 300);
+        login({ username: data.username });
+        navigate('/', { replace: true });
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
       }
@@ -88,4 +87,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 

@@ -1,44 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom' // 加入 useLocation
+import React, { useState } from 'react' // Removed useEffect
+import { Link, useNavigate } from 'react-router-dom' // Removed useLocation
 import { ShoppingCart, Search, Menu, X, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCart } from '@/contexts/CartContext'
+import { useAuth } from '../../contexts/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState(() => {
-    const userData = localStorage.getItem('user')
-    return userData ? JSON.parse(userData) : null
-  })
+  const { user, logout } = useAuth();
   const { getTotalItems } = useCart()
   const navigate = useNavigate()
-  const location = useLocation() // 新增
-
-  useEffect(() => {
-    // 登录/注册后页面跳转时，重新读取 user
-    const handleStorage = () => {
-      const userData = localStorage.getItem('user')
-      setUser(userData ? JSON.parse(userData) : null)
-    }
-    window.addEventListener('storage', handleStorage)
-    return () => window.removeEventListener('storage', handleStorage)
-  }, [])
-
-  // 关键：用 location 作为依赖
-  useEffect(() => {
-    const userData = localStorage.getItem('user')
-    setUser(userData ? JSON.parse(userData) : null)
-  }, [location]) // 只需改这里
-
-  useEffect(() => {
-    const handleLoginStateChange = () => {
-      const userData = localStorage.getItem('user');
-      setUser(userData ? JSON.parse(userData) : null);
-    };
-    window.addEventListener('loginStateChange', handleLoginStateChange);
-    return () => window.removeEventListener('loginStateChange', handleLoginStateChange);
-  }, []);
   
   const navigation = [
     { name: '首页', href: '/' },
@@ -50,9 +22,7 @@ const Header = () => {
   ]
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
-    setUser(null)
+    logout();
     navigate('/login')
   }
 
@@ -187,6 +157,8 @@ const Header = () => {
 }
 
 export default Header
+ 
+
  
 
 

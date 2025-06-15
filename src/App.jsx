@@ -8,15 +8,17 @@ import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
 import { CartProvider } from './contexts/CartContext'
+import { AuthProvider } from './contexts/AuthContext';
 import './App.css'
 import LoginPage from './pages/LoginPage'; // 新增
 import RegisterPage from './pages/RegisterPage'; // 新增
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <div className="min-h-screen flex flex-col">
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col">
           <Header />
           <main className="flex-1">
             <Routes>
@@ -33,6 +35,7 @@ function App() {
         </div>
       </Router>
     </CartProvider>
+  </AuthProvider>
   )
 }
 
