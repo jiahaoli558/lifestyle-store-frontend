@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Star, Truck, Shield, Headphones } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
-import { fetchProducts, fetchCategories, fetchUserProfile } from '@/services/api' // Added fetchUserProfile
+import { fetchProducts, fetchCategories, fetchUserProfile } from '../services/api.js' // Changed path and added .js
 import { useState, useEffect } from 'react'
 
 
@@ -265,5 +265,7 @@ const HomePage = () => {
 } 
 
 export default HomePage
+
+
 
 
