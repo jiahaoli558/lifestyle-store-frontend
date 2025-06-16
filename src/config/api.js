@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://lifestyle-store-backend-production.up.railway.app/api';
+const API_BASE_URL = 'https://lifestyle-store-backend.onrender.com/api';
 
 export const apiConfig = {
   baseURL: API_BASE_URL,
