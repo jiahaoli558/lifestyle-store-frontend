@@ -35,22 +35,28 @@ const getAuthToken = () => {
 
 const authedFetch = async (url, options = {}) => {
   const token = getAuthToken();
+  console.log('[authedFetch] Token retrieved:', token); // Log the token
+
   const headers = {
     'Content-Type': 'application/json',
-    ...options.headers, // Spread any headers from options
+    ...options.headers,
   };
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
+    console.log('[authedFetch] Authorization header set:', headers['Authorization']); // Log the header
+  } else {
+    console.log('[authedFetch] No token found. Request will be made without Authorization header.');
   }
+
+  // For debugging, log all request headers right before fetch
+  console.log('[authedFetch] Making request to:', url, 'with headers:', JSON.stringify(headers));
 
   const response = await fetch(url, {
     ...options,
     headers,
   });
-
-  // Basic error handling or response processing can be added here if desired
-  // For now, just return the response for the caller to handle
+  // console.log('[authedFetch] Response status:', response.status); // Optional: log response status
   return response;
 };
 
