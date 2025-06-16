@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, Star, Truck, Shield, Headphones } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
-import { fetchProducts, fetchCategories } from '@/services/api'
+import { fetchProducts, fetchCategories, fetchUserProfile } from '@/services/api' // Added fetchUserProfile
 import { useState, useEffect } from 'react'
 
 
@@ -13,6 +13,23 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [profileData, setProfileData] = useState(null); // New state for profile
+  const [profileError, setProfileError] = useState(null); // New state for profile error
+
+  const handleFetchProfile = async () => {
+    console.log('Fetch Profile button clicked, handleFetchProfile function entered.'); // New log
+    setProfileData(null); // Reset previous data
+    setProfileError(null); // Reset previous error
+    try {
+      const data = await fetchUserProfile();
+      setProfileData(data);
+      console.log('Profile data:', data);
+    } catch (error) {
+      setProfileError(error.message || 'Failed to fetch profile');
+      console.error('Profile error:', error);
+    }
+  };
+
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -51,6 +68,26 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen">
+      {/* User Profile Test Section - Temporary */}
+      <div className="p-4 border-b bg-yellow-50">
+        <h2 className="text-xl font-semibold">User Profile Test (Temporary)</h2>
+        <Button 
+          onClick={handleFetchProfile}
+          className="my-2 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Fetch Profile (Protected Route)
+        </Button>
+        {profileData && (
+          <pre className="mt-2 p-2 bg-gray-100 border rounded text-sm overflow-x-auto">
+            {JSON.stringify(profileData, null, 2)}
+          </pre>
+        )}
+        {profileError && (
+          <p className="mt-2 text-red-600 font-medium">Error: {profileError}</p>
+        )}
+      </div>
+      {/* End User Profile Test Section */}
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-50 to-indigo-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -228,4 +265,5 @@ const HomePage = () => {
 } 
 
 export default HomePage
+
 
