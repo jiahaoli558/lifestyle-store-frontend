@@ -29,6 +29,7 @@ const AdminLoginPage = () => {
     setError('')
 
     try {
+      console.log("ADMIN LOGIN ATTEMPTING TO FETCH:", targetUrl)
       const response = await fetch(`${API_BASE_URL}/admin/login`, {
         method: 'POST',
         headers: {
