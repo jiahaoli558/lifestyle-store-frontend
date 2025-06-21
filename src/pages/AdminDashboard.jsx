@@ -40,7 +40,7 @@ const AdminDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await fetch('${API_BASE_URL}/admin/dashboard')
+      const response = await fetch(`${API_BASE_URL}/admin/dashboard`)
       if (response.ok) {
         const data = await response.json()
         setDashboardData(data)

@@ -45,7 +45,7 @@ const AdminProductsPage = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('${API_BASE_URL}/admin/products')
+      const response = await fetch(`${API_BASE_URL}/admin/products`)
       if (response.ok) {
         const data = await response.json()
         setProducts(data.products)
@@ -62,7 +62,7 @@ const AdminProductsPage = () => {
     try {
       const url = editingProduct 
         ? `${API_BASE_URL}/admin/products/${editingProduct.id}`
-        : '${API_BASE_URL}/admin/products'
+        : `${API_BASE_URL}/admin/products`
       
       const method = editingProduct ? 'PUT' : 'POST'
       
