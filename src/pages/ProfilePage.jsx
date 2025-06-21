@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import API_BASE_URL from '../config/api';
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -51,7 +52,7 @@ const ProfilePage = () => {
       setLoading(true)
       
       // 获取用户资料
-      const profileRes = await fetch(`http://localhost:5000/api/profile/${user.id}`)
+      const profileRes = await fetch(`${API_BASE_URL}/profile/${user.id}`)
       if (profileRes.ok) {
         const profileData = await profileRes.json()
         setProfile(profileData)
@@ -67,28 +68,28 @@ const ProfilePage = () => {
       }
 
       // 获取地址列表
-      const addressRes = await fetch(`http://localhost:5000/api/addresses/${user.id}`)
+      const addressRes = await fetch(`${API_BASE_URL}/addresses/${user.id}`)
       if (addressRes.ok) {
         const addressData = await addressRes.json()
         setAddresses(addressData)
       }
 
       // 获取收藏夹
-      const wishlistRes = await fetch(`http://localhost:5000/api/wishlist/${user.id}`)
+      const wishlistRes = await fetch(`${API_BASE_URL}/wishlist/${user.id}`)
       if (wishlistRes.ok) {
         const wishlistData = await wishlistRes.json()
         setWishlist(wishlistData)
       }
 
       // 获取通知
-      const notificationRes = await fetch(`http://localhost:5000/api/notifications/${user.id}`)
+      const notificationRes = await fetch(`${API_BASE_URL}/notifications/${user.id}`)
       if (notificationRes.ok) {
         const notificationData = await notificationRes.json()
         setNotifications(notificationData.notifications || [])
       }
 
       // 获取支付方式
-      const paymentRes = await fetch(`http://localhost:5000/api/payment-methods/${user.id}`)
+      const paymentRes = await fetch(`${API_BASE_URL}/payment-methods/${user.id}`)
       if (paymentRes.ok) {
         const paymentData = await paymentRes.json()
         setPaymentMethods(paymentData)
@@ -104,7 +105,7 @@ const ProfilePage = () => {
   const handleProfileUpdate = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`http://localhost:5000/api/profile/${user.id}`, {
+      const response = await fetch(`${API_BASE_URL}/profile/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +127,7 @@ const ProfilePage = () => {
 
   const removeFromWishlist = async (wishlistId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/wishlist/${wishlistId}`, {
+      const response = await fetch(`${API_BASE_URL}/wishlist/${wishlistId}`, {
         method: 'DELETE'
       })
 
@@ -525,4 +526,5 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage
+
 

@@ -27,8 +27,8 @@ const LoginPage = () => {
       console.log('login response data:', data); // 加这一行
 
       if (response.ok) {
-        console.log('[LoginPage] About to call context login with:', { username: data.username }); // New log
-        login({ username: data.username });
+        console.log('[LoginPage] About to call context login with:', data.user); // New log
+        login(data.user);
         navigate('/', { replace: true });
       } else {
         setError(data.message || '登录失败，请检查用户名和密码。');
@@ -88,6 +88,12 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+
+
+
+
 
 
 
