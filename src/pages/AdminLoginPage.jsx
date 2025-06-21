@@ -1,60 +1,65 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import API_BASE_URL from '../config/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Shield, User, Lock, AlertCircle } from 'lucide-react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Shield, User, Lock, AlertCircle } from 'lucide-react';
+import API_BASE_URL from '../config/api'; // Ensure this path is correct
 
 const AdminLoginPage = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
-      console.log("ADMIN LOGIN ATTEMPTING TO FETCH:", targetUrl)
-      const response = await fetch(`${API_BASE_URL}/admin/login`, {
+      const targetUrl = `${API_BASE_URL}/admin/login`;
+      console.log("ADMIN LOGIN ATTEMPTING TO FETCH:", targetUrl); // Debugging log
+
+      const response = await fetch(targetUrl, { // Use backticks and targetUrl
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
-      })
+      });
 
       if (response.ok) {
-        const data = await response.json()
-        // 保存管理员登录状态
-        localStorage.setItem('admin_user', JSON.stringify(data.user))
-        localStorage.setItem('admin_role', JSON.stringify(data.role))
-        navigate('/admin/dashboard')
+        const data = await response.json();
+        // Save admin login state
+        // Ensure 'data.user' and 'data.role' are what your backend sends
+        localStorage.setItem('admin_user', JSON.stringify(data.user || { username: formData.username })); 
+        localStorage.setItem('admin_role', JSON.stringify(data.role || 'admin')); // Default role if not provided
+        
+        // Navigate to admin dashboard or appropriate page
+        navigate('/admin/dashboard'); 
       } else {
-        const errorData = await response.json()
-        setError(errorData.error || '登录失败')
+        const errorData = await response.json().catch(() => ({ error: 'Login failed, and error response was not valid JSON.' }));
+        setError(errorData.error || '登录失败');
       }
     } catch (error) {
-      console.error('Login error:', error)
-      setError('网络错误，请重试')
+      console.error('Login error:', error);
+      setError('网络错误，请重试');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -132,20 +137,20 @@ const AdminLoginPage = () => {
               <p className="text-sm text-gray-600">
                 默认管理员账户：admin / admin123
               </p>
-              <Button
-                variant="link"
-                onClick={() => navigate('/')}
-                className="text-sm"
-              >
-                返回首页
-              </Button>
+              <button 
+                  onClick={() => navigate('/')} 
+                  className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  返回首页
+              </button>
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminLoginPage
+export default AdminLoginPage;
+
 
