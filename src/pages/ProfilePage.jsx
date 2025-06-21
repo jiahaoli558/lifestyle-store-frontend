@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
 import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -526,5 +527,6 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage
+
 
 
