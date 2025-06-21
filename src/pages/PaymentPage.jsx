@@ -9,6 +9,8 @@ import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { useCart } from '@/contexts/CartContext'
 import { useAuth } from '@/contexts/AuthContext'
+import API_BASE_URL from '../config/api'
+
 import { 
   CreditCard, 
   Smartphone, 
@@ -44,7 +46,7 @@ const PaymentPage = () => {
 
   const fetchUserAddresses = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/addresses/${user.id}`)
+      const response = await fetch(`${API_BASE_URL}/addresses/${user.id}`)
       if (response.ok) {
         const data = await response.json()
         setAddresses(data)

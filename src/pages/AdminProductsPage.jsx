@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
+import API_BASE_URL from '../config/api';
+
 import { 
   Package, 
   Plus, 
@@ -43,7 +45,7 @@ const AdminProductsPage = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/products')
+      const response = await fetch('${API_BASE_URL}/admin/products')
       if (response.ok) {
         const data = await response.json()
         setProducts(data.products)
@@ -59,8 +61,8 @@ const AdminProductsPage = () => {
     e.preventDefault()
     try {
       const url = editingProduct 
-        ? `http://localhost:5000/api/admin/products/${editingProduct.id}`
-        : 'http://localhost:5000/api/admin/products'
+        ? `${API_BASE_URL}/admin/products/${editingProduct.id}`
+        : '${API_BASE_URL}/admin/products'
       
       const method = editingProduct ? 'PUT' : 'POST'
       
@@ -94,7 +96,7 @@ const AdminProductsPage = () => {
   const handleDelete = async (productId) => {
     if (confirm('确定要删除这个商品吗？')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/admin/products/${productId}`, {
+        const response = await fetch(`${API_BASE_URL}/admin/products/${productId}`, {
           method: 'DELETE'
         })
 
