@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import API_BASE_URL from '../config/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -33,7 +34,7 @@ const TrackingPage = () => {
   const fetchTrackingInfo = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`http://localhost:5000/api/shipping/track/${trackingNumber}`)
+      const response = await fetch(`${API_BASE_URL}/shipping/track/${trackingNumber}`)
       
       if (response.ok) {
         const data = await response.json()
