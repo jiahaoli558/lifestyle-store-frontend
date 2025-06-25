@@ -186,126 +186,126 @@ const AdminProductsPage = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* 添加/编辑商品表单 */}
-{/*         {showAddForm && (
-          // <Card className="mb-8">
-          //   <CardHeader>
-          //     <CardTitle className="flex items-center justify-between">
-          //       <span>{editingProduct ? '编辑商品' : '添加商品'}</span>
-          //       <Button variant="ghost" onClick={resetForm}>
-          //         <X className="h-4 w-4" />
-          //       </Button>
-          //     </CardTitle>
-          //   </CardHeader>
-          //   <CardContent>
-          //     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          //       <div>
-          //         <Label htmlFor="name">商品名称</Label>
-          //         <Input
-          //           id="name"
-          //           value={formData.name}
-          //           onChange={(e) => setFormData({...formData, name: e.target.value})}
-          //           required
-          //         />
-          //       </div>
+        {showAddForm && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>{editingProduct ? '编辑商品' : '添加商品'}</span>
+                <Button variant="ghost" onClick={resetForm}>
+                  <X className="h-4 w-4" />
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="name">商品名称</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    required
+                  />
+                </div>
                 
-          //       <div>
-          //         <Label htmlFor="category">分类</Label>
-          //         <Input
-          //           id="category"
-          //           value={formData.category}
-          //           onChange={(e) => setFormData({...formData, category: e.target.value})}
-          //         />
-          //       </div>
+                <div>
+                  <Label htmlFor="category">分类</Label>
+                  <Input
+                    id="category"
+                    value={formData.category}
+                    onChange={(e) => setFormData({...formData, category: e.target.value})}
+                  />
+                </div>
                 
-          //       <div>
-          //         <Label htmlFor="price">价格</Label>
-          //         <Input
-          //           id="price"
-          //           type="number"
-          //           step="0.01"
-          //           value={formData.price}
-          //           onChange={(e) => setFormData({...formData, price: e.target.value})}
-          //           required
-          //         />
-          //       </div>
+                <div>
+                  <Label htmlFor="price">价格</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    value={formData.price}
+                    onChange={(e) => setFormData({...formData, price: e.target.value})}
+                    required
+                  />
+                </div>
                 
-          //       <div>
-          //         <Label htmlFor="original_price">原价</Label>
-          //         <Input
-          //           id="original_price"
-          //           type="number"
-          //           step="0.01"
-          //           value={formData.original_price}
-          //           onChange={(e) => setFormData({...formData, original_price: e.target.value})}
-          //         />
-          //       </div>
+                <div>
+                  <Label htmlFor="original_price">原价</Label>
+                  <Input
+                    id="original_price"
+                    type="number"
+                    step="0.01"
+                    value={formData.original_price}
+                    onChange={(e) => setFormData({...formData, original_price: e.target.value})}
+                  />
+                </div>
                 
-          //       <div>
-          //         <Label htmlFor="stock">库存</Label>
-          //         <Input
-          //           id="stock"
-          //           type="number"
-          //           value={formData.stock}
-          //           onChange={(e) => setFormData({...formData, stock: e.target.value})}
-          //         />
-          //       </div>
+                <div>
+                  <Label htmlFor="stock">库存</Label>
+                  <Input
+                    id="stock"
+                    type="number"
+                    value={formData.stock}
+                    onChange={(e) => setFormData({...formData, stock: e.target.value})}
+                  />
+                </div>
                 
-          //       <div>
-          //         <Label htmlFor="discount">折扣(%)</Label>
-          //         <Input
-          //           id="discount"
-          //           type="number"
-          //           step="0.01"
-          //           value={formData.discount}
-          //           onChange={(e) => setFormData({...formData, discount: e.target.value})}
-          //         />
-          //       </div>
+                <div>
+                  <Label htmlFor="discount">折扣(%)</Label>
+                  <Input
+                    id="discount"
+                    type="number"
+                    step="0.01"
+                    value={formData.discount}
+                    onChange={(e) => setFormData({...formData, discount: e.target.value})}
+                  />
+                </div>
                 
-          //       <div className="md:col-span-2">
-          //         <Label htmlFor="image">图片URL</Label>
-          //         <Input
-          //           id="image"
-          //           value={formData.image}
-          //           onChange={(e) => setFormData({...formData, image: e.target.value})}
-          //         />
-          //       </div>
+                <div className="md:col-span-2">
+                  <Label htmlFor="image">图片URL</Label>
+                  <Input
+                    id="image"
+                    value={formData.image}
+                    onChange={(e) => setFormData({...formData, image: e.target.value})}
+                  />
+                </div>
                 
-          //       <div className="md:col-span-2">
-          //         <Label htmlFor="description">商品描述</Label>
-          //         <textarea
-          //           id="description"
-          //           className="w-full p-2 border border-gray-300 rounded-md"
-          //           rows="3"
-          //           value={formData.description}
-          //           onChange={(e) => setFormData({...formData, description: e.target.value})}
-          //         />
-          //       </div>
+                <div className="md:col-span-2">
+                  <Label htmlFor="description">商品描述</Label>
+                  <textarea
+                    id="description"
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    rows="3"
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  />
+                </div>
                 
-          //       <div className="md:col-span-2">
-          //         <label className="flex items-center">
-          //           <input
-          //             type="checkbox"
-          //             checked={formData.is_new}
-          //             onChange={(e) => setFormData({...formData, is_new: e.target.checked})}
-          //             className="mr-2"
-          //           />
-          //           新品标识
-          //         </label>
-          //       </div>
+                <div className="md:col-span-2">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={formData.is_new}
+                      onChange={(e) => setFormData({...formData, is_new: e.target.checked})}
+                      className="mr-2"
+                    />
+                    新品标识
+                  </label>
+                </div>
                 
-          //       <div className="md:col-span-2 flex gap-4">
-          //         <Button type="submit">
-          //           <Save className="h-4 w-4 mr-2" />
-          //           {editingProduct ? '更新商品' : '创建商品'}
-          //         </Button>
-          //         <Button type="button" variant="outline" onClick={resetForm}>
-          //           取消
-          //         </Button>
-          //       </div>
-          //     </form>
-          //   </CardContent>
-          // </Card>
-        )} */}
+                <div className="md:col-span-2 flex gap-4">
+                  <Button type="submit">
+                    <Save className="h-4 w-4 mr-2" />
+                    {editingProduct ? '更新商品' : '创建商品'}
+                  </Button>
+                  <Button type="button" variant="outline" onClick={resetForm}>
+                    取消
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
 
         {/* 搜索和筛选 */}
         <Card className="mb-6">
