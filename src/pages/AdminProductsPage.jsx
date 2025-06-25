@@ -421,6 +421,3 @@ const AdminProductsPage = () => {
 export default AdminProductsPage
 
 
-
-export default AdminProductsPage
-
