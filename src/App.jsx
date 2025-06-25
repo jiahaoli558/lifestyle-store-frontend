@@ -15,6 +15,9 @@ import TrackingPage from './pages/TrackingPage'
 import AdminLoginPage from './pages/AdminLoginPage'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminProductsPage from './pages/AdminProductsPage'
+import AdminOrdersPage from './pages/AdminOrdersPage';
+import AdminUsersPage from './pages/AdminUsersPage';
+import AdminSettingsPage from './pages/AdminSettingsPage';
 import { CartProvider } from './contexts/CartContext'
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css'
@@ -44,6 +47,9 @@ function App() {
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/products" element={<AdminProductsPage />} />
+              <Route path="/admin/orders" element={<AdminOrdersPage />} />
+              <Route path="/admin/users" element={<AdminUsersPage />} />
+              <Route path="/admin/settings" element={<AdminSettingsPage />} />
             </Routes>
           </main>
           <Footer />
@@ -56,6 +62,12 @@ function App() {
 }
 
 export default App
+ 
+
+ 
+
+ 
+
  
 
  
