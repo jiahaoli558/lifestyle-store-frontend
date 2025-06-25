@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import API_BASE_URL from '../config/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import API_BASE_URL from '../config/api';
-
 import { 
   Users, 
   Package, 
@@ -15,9 +14,7 @@ import {
   BarChart3,
   PieChart,
   LogOut,
-  Settings,
-  Home,
-  Plus
+  Settings
 } from 'lucide-react'
 import {
   LineChart,
@@ -28,6 +25,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   PieChart as RechartsPieChart,
+  Pie, // Added Pie
   Cell
 } from 'recharts'
 
@@ -37,14 +35,8 @@ const AdminDashboard = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // 检查是否是管理员登录
-    const adminUser = localStorage.getItem('admin_user')
-    if (!adminUser) {
-      navigate('/admin/login')
-      return
-    }
     fetchDashboardData()
-  }, [navigate])
+  }, [])
 
   const fetchDashboardData = async () => {
     try {
@@ -66,38 +58,14 @@ const AdminDashboard = () => {
     navigate('/admin/login')
   }
 
-  // 模拟数据
-  const mockData = {
-    stats: {
-      total_users: 156,
-      total_products: 89,
-      total_orders: 234,
-      monthly_revenue: 45678.90
-    },
-    order_trends: [
-      { date: '2024-01', orders: 45 },
-      { date: '2024-02', orders: 52 },
-      { date: '2024-03', orders: 48 },
-      { date: '2024-04', orders: 61 },
-      { date: '2024-05', orders: 55 },
-      { date: '2024-06', orders: 67 }
-    ],
-    order_status: [
-      { name: '待处理', value: 12, color: '#f59e0b' },
-      { name: '已确认', value: 45, color: '#3b82f6' },
-      { name: '配送中', value: 23, color: '#8b5cf6' },
-      { name: '已完成', value: 156, color: '#10b981' }
-    ]
-  }
-
-  const data = dashboardData || mockData
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8']
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">加载中...</p>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-4">加载中...</p>
         </div>
       </div>
     )
@@ -105,213 +73,250 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 管理员导航栏 */}
-      <nav className="bg-white shadow-sm border-b">
+      {/* 顶部导航 */}
+      <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+          <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <h1 className="text-xl font-bold text-gray-900">管理后台</h1>
-              </div>
-              <div className="hidden md:ml-6 md:flex md:space-x-8">
-                <button
-                  onClick={() => navigate('/admin/dashboard')}
-                  className="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  <BarChart3 className="h-4 w-4 mr-2" />
-                  仪表板
-                </button>
-                <button
-                  onClick={() => navigate('/admin/products')}
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  <Package className="h-4 w-4 mr-2" />
-                  商品管理
-                </button>
-                <button
-                  onClick={() => navigate('/admin/orders')}
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  订单管理
-                </button>
-                <button
-                  onClick={() => navigate('/admin/users')}
-                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
-                  <Users className="h-4 w-4 mr-2" />
-                  用户管理
-                </button>
-              </div>
+              <h1 className="text-2xl font-bold text-gray-900">管理后台</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <Button
-                variant="outline"
-                onClick={() => navigate('/')}
-              >
-                <Home className="h-4 w-4 mr-2" />
-                返回网站
+              <Button variant="outline" onClick={() => navigate('/admin/settings')}>
+                <Settings className="h-4 w-4 mr-2" />
+                设置
               </Button>
-              <Button
-                variant="outline"
-                onClick={handleLogout}
-              >
+              <Button variant="outline" onClick={handleLogout}>
                 <LogOut className="h-4 w-4 mr-2" />
                 退出登录
               </Button>
             </div>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* 主要内容 */}
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          {/* 统计卡片 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Users className="h-8 w-8 text-blue-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">总用户数</p>
-                    <p className="text-2xl font-bold text-gray-900">{data.stats.total_users}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+      {/* 侧边导航 */}
+      <div className="flex">
+        <nav className="w-64 bg-white shadow-sm min-h-screen">
+          <div className="p-4">
+            <div className="space-y-2">
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate('/admin/dashboard')}
+              >
+                <BarChart3 className="h-4 w-4 mr-2" />
+                仪表板
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate('/admin/products')}
+              >
+                <Package className="h-4 w-4 mr-2" />
+                商品管理
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate('/admin/orders')}
+              >
+                <ShoppingCart className="h-4 w-4 mr-2" />
+                订单管理
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => navigate('/admin/users')}
+              >
+                <Users className="h-4 w-4 mr-2" />
+                用户管理
+              </Button>
+            </div>
+          </div>
+        </nav>
 
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <Package className="h-8 w-8 text-green-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">商品总数</p>
-                    <p className="text-2xl font-bold text-gray-900">{data.stats.total_products}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+        {/* 主要内容区域 */}
+        <main className="flex-1 p-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">仪表板</h2>
+              <p className="text-gray-600">欢迎回到管理后台</p>
+            </div>
 
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <ShoppingCart className="h-8 w-8 text-purple-600" />
+            {/* 统计卡片 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Users className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">总用户数</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {dashboardData?.stats?.total_users || 0}
+                      </p>
+                    </div>
                   </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">订单总数</p>
-                    <p className="text-2xl font-bold text-gray-900">{data.stats.total_orders}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <Package className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">商品总数</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {dashboardData?.stats?.total_products || 0}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-yellow-100 rounded-lg">
+                      <ShoppingCart className="h-6 w-6 text-yellow-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">总订单数</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        {dashboardData?.stats?.total_orders || 0}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-red-100 rounded-lg">
+                      <DollarSign className="h-6 w-6 text-red-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">本月销售额</p>
+                      <p className="text-2xl font-bold text-gray-900">
+                        ¥{dashboardData?.stats?.monthly_revenue?.toFixed(2) || '0.00'}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+              {/* 订单趋势图 */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5" />
+                    最近7天订单趋势
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={dashboardData?.daily_orders || []}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line 
+                        type="monotone" 
+                        dataKey="count" 
+                        stroke="#8884d8" 
+                        strokeWidth={2}
+                        name="订单数量"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+
+              {/* 订单状态分布 */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <PieChart className="h-5 w-5" />
+                    订单状态分布
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <RechartsPieChart>
+                      <Pie
+                        data={dashboardData?.order_status_stats || []}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        label={({ status, percent }) => `${status} ${(percent * 100).toFixed(0)}%`}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="count"
+                      >
+                        {(dashboardData?.order_status_stats || []).map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </RechartsPieChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* 热销商品 */}
             <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <DollarSign className="h-8 w-8 text-yellow-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">月销售额</p>
-                    <p className="text-2xl font-bold text-gray-900">¥{data.stats.monthly_revenue?.toLocaleString()}</p>
-                  </div>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="h-5 w-5" />
+                  热销商品 TOP 5
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {dashboardData?.popular_products?.map((product, index) => (
+                    <div key={product.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-bold text-blue-600">{index + 1}</span>
+                        </div>
+                        <img 
+                          src={product.image} 
+                          alt={product.name}
+                          className="w-12 h-12 object-cover rounded"
+                        />
+                        <div>
+                          <h4 className="font-medium">{product.name}</h4>
+                          <p className="text-sm text-gray-600">销量：{product.total_sold}</p>
+                        </div>
+                      </div>
+                      <Badge variant="secondary">
+                        热销
+                      </Badge>
+                    </div>
+                  )) || (
+                    <div className="text-center py-8">
+                      <Package className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                      <p className="text-gray-600">暂无销售数据</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
           </div>
-
-          {/* 图表区域 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            {/* 订单趋势图 */}
-            <Card>
-              <CardHeader>
-                <CardTitle>订单趋势</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={data.order_trends}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="orders" stroke="#3b82f6" strokeWidth={2} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            {/* 订单状态分布 */}
-            <Card>
-              <CardHeader>
-                <CardTitle>订单状态分布</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <RechartsPieChart>
-                    <Pie
-                      data={data.order_status}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, value }) => `${name}: ${value}`}
-                    >
-                      {data.order_status.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </RechartsPieChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* 快速操作 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>快速操作</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Button 
-                  className="h-20 flex flex-col items-center justify-center"
-                  onClick={() => navigate('/admin/products')}
-                >
-                  <Plus className="h-6 w-6 mb-2" />
-                  添加商品
-                </Button>
-                <Button 
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center"
-                  onClick={() => navigate('/admin/orders')}
-                >
-                  <ShoppingCart className="h-6 w-6 mb-2" />
-                  查看订单
-                </Button>
-                <Button 
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center"
-                  onClick={() => navigate('/admin/users')}
-                >
-                  <Users className="h-6 w-6 mb-2" />
-                  用户管理
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        </main>
       </div>
     </div>
   )
 }
 
 export default AdminDashboard
+
+
 
