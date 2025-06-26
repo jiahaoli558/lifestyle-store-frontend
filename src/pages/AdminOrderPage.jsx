@@ -163,7 +163,7 @@
                       <SelectValue placeholder="所有状态" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">所有状态</SelectItem>
+{/*                       <SelectItem value="">所有状态</SelectItem> */}
                       {orderStatuses.map((status) => (
                         <SelectItem key={status.value} value={status.value}>
                           {status.label}
