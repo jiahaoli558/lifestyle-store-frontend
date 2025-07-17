@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
+import AddAddressModal from '@/components/AddAddressModal'
 import { 
   User, 
   MapPin, 
@@ -137,6 +138,29 @@ const ProfilePage = () => {
       }
     } catch (error) {
       console.error('Error removing from wishlist:', error)
+    }
+  }
+
+  const handleAddressAdded = (newAddress) => {
+    setAddresses([...addresses, newAddress])
+  }
+
+  const deleteAddress = async (addressId) => {
+    if (!confirm('确定要删除这个地址吗？')) return
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/addresses/${addressId}`, {
+        method: 'DELETE'
+      })
+
+      if (response.ok) {
+        setAddresses(addresses.filter(addr => addr.id !== addressId))
+      } else {
+        alert('删除失败，请重试')
+      }
+    } catch (error) {
+      console.error('Error deleting address:', error)
+      alert('删除失败，请重试')
     }
   }
 
@@ -321,16 +345,14 @@ const ProfilePage = () => {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>收货地址</CardTitle>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                添加新地址
-              </Button>
+              <AddAddressModal userId={user.id} onAddressAdded={handleAddressAdded} />
             </CardHeader>
             <CardContent>
               {addresses.length === 0 ? (
                 <div className="text-center py-8">
                   <MapPin className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-600">暂无收货地址</p>
+                  <p className="text-gray-600 mb-4">暂无收货地址</p>
+                  <AddAddressModal userId={user.id} onAddressAdded={handleAddressAdded} />
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -357,7 +379,11 @@ const ProfilePage = () => {
                           <Button variant="outline" size="sm">
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => deleteAddress(address.id)}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
